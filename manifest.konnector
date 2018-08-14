@@ -1,0 +1,65 @@
+{
+  "version": "1.0.0",
+  "name": "Probikeshop",
+  "type": "konnector",
+  "language": "node",
+  "icon": "icon.png",
+  "slug": "template",
+  "source": "https://github.com/Crash--",
+  "editor": "Quentin Valmori",
+  "vendor_link": "https://github.com/Crash--",
+  "categories": ["other"],
+  "fields": {
+    "login": {
+      "type": "text"
+    },
+    "password": {
+      "type": "password"
+    },
+    "advancedFields": {
+      "folderPath": {
+        "advanced": true,
+        "isRequired": false
+      }
+    }
+  },
+  "data_types": [
+    "bill"
+  ],
+  "screenshots": [],
+  "permissions": {
+    "bills": {
+      "type": "io.cozy.bills"
+    },
+    "files": {
+      "type": "io.cozy.files"
+    },
+    "accounts": {
+      "type": "io.cozy.accounts",
+      "verbs": ["GET"]
+    }
+  },
+  "developer": {
+    "name": "Quentin Valmori",
+    "url": "https://github.com/Crash--"
+  },
+  "langs": ["fr"],
+  "locales": {
+    "fr": {
+      "short_description": "Probikeshop",
+      "long_description": "Récupère les factures sur le site probikeshop.fr",
+      "permissions": {
+        "bills": {
+          "description": "Utilisé pour sauver les données des factures"
+        },
+        "files": {
+          "description": "Utilisé pour sauvegarder les factures"
+        },
+        "accounts": {
+          "description": "Utilisé pour obtenir les données du compte"
+        }
+      }
+    }
+  },
+  "manifest_version": "2"
+}
