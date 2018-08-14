@@ -60,7 +60,7 @@ async function start(fields) {
       entries,
       { folderPath },
       {
-        identifiers: ['generali'],
+        identifiers: ['probikeshop'],
         keys: ['date', 'amount', 'vendor'],
         contentType: 'application/pdf'
       }
