@@ -1,18 +1,9 @@
-const { requestFactory, saveBills, mkdirp } = require('cozy-konnector-libs')
-const months = [
-  'janvier',
-  'février',
-  'mars',
-  'avril',
-  'mai',
-  'juin',
-  'juillet',
-  'août',
-  'septembre',
-  'octobre',
-  'novembre',
-  'décembre'
-]
+const {
+  requestFactory,
+  saveBills,
+  mkdirp,
+  BaseKonnector} = require('cozy-konnector-libs')
+
 //const $ = require('cheerio')
 const request = requestFactory({
   // the debug mode shows all the details about http request and responses. Very usefull for
@@ -29,58 +20,52 @@ const request = requestFactory({
 const cheerio = require('cheerio')
 const baseUrl = 'https://www.probikeshop.fr'
 
-const fields = require('../konnector-dev-config.json')
+module.exports = new BaseKonnector(start)
 
-request(`${baseUrl}/mon-compte`, {
-  xmlMode: true
-})
-  .then($ => $)
-  .catch(error => {
+async function start(fields) {
+  try {
+    await request(`${baseUrl}/mon-compte`, {
+      xmlMode: true
+    })
+  } catch (error) {
     const notCleanedHtml = error.message
       .substr(6, error.message.length)
       .replace(/&quot;/g, '')
       .replace(/\\/g, '')
     const newPage = cheerio.load(notCleanedHtml)
     const [action, inputs] = formContent(newPage, 'form[action="/login.html"]')
-    inputs['signin[email]'] = fields.fields.login
-    inputs['signin[password]'] = fields.fields.password
+    inputs['signin[email]'] = fields.login
+    inputs['signin[password]'] = fields.password
 
-    return post(`${baseUrl}${action}`, inputs)
-      .then(() => {
-        return request(`${baseUrl}/mon-compte/commandes/`).then($ => {
-          const parseEntries = []
-          $('.orders_table tr').each(function() {
-            const row = Array.from($(this).children('td')).map((cell, index) =>
-              getText($(cell), index)
-            )
-            if (row[5] !== undefined) {
-              parseEntries.push(parseEntriesFor(row[5], row))
-            }
-          })
-          return Promise.all(parseEntries)
-            .then(entriers => {
-              return [].concat.apply([], entriers)
-            })
-            .then(entries => {
-              const folderPath = '/Administratif/Probikeshop'
-              mkdirp(folderPath).then(() => {
-                return saveBills(
-                  entries,
-                  { folderPath },
-                  {
-                    identifiers: ['generali'],
-                    keys: ['date', 'amount', 'vendor'],
-                    contentType: 'application/pdf'
-                  }
-                )
-              })
-            })
-        })
-      })
-      .catch(() => {
-        // console.log('*******', error)
-      })
-  })
+    await post(`${baseUrl}${action}`, inputs)
+
+    const $ = await request(`${baseUrl}/mon-compte/commandes/`)
+
+    const parseEntries = []
+    $('.orders_table tr').each(function() {
+      const row = Array.from($(this).children('td')).map((cell, index) =>
+        getText($(cell), index)
+      )
+      if (row[5] !== undefined) {
+        parseEntries.push(parseEntriesFor(row[5], row))
+      }
+    })
+    const entriers = await Promise.all(parseEntries)
+    const entries = [].concat.apply([], entriers)
+
+    const folderPath = fields.folderPath
+    await mkdirp(folderPath)
+    return saveBills(
+      entries,
+      { folderPath },
+      {
+        identifiers: ['generali'],
+        keys: ['date', 'amount', 'vendor'],
+        contentType: 'application/pdf'
+      }
+    )
+  }
+}
 
 const getText = function($cell, index) {
   if (index !== 5) {
@@ -89,15 +74,31 @@ const getText = function($cell, index) {
     return $cell.find('a').attr('href')
   }
 }
+const months = [
+  'janvier',
+  'février',
+  'mars',
+  'avril',
+  'mai',
+  'juin',
+  'juillet',
+  'août',
+  'septembre',
+  'octobre',
+  'novembre',
+  'décembre'
+]
+
 function parseDate(text) {
   const [day, month, year] = text.split(' ')
   return new Date(year, months.indexOf(month), day)
 }
+
 function parseEntriesFor(fileUrl, row) {
   if (fileUrl !== undefined) {
     const common = {
       vendor: 'Probikeshop',
-      type: 'loisirs',
+      type: 'shopping',
       isRefund: true,
       beneficiary: 'beneficiary',
       isThirdPartyPayer: true
