@@ -8,7 +8,7 @@
   "source": "https://github.com/Crash--",
   "editor": "Quentin Valmori",
   "vendor_link": "https://github.com/Crash--",
-  "categories": ["other"],
+  "categories": ["shopping"],
   "fields": {
     "login": {
       "type": "text"

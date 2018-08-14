@@ -1,14 +1,14 @@
 {
-  "name": "cozy-konnector-template",
+  "name": "cozy-konnector-probikeshop",
   "version": "1.0.0",
   "description": "",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Crash--/cozy-konnector-probikeshop.git"
   },
-  "keywords": [],
-  "author": "Cozy Cloud",
-  "license": "AGPL-3.0",
+  "keywords": ["probikeshop", "cozy", "cozycloud", "konnector"],
+  "author": "Quentin Valmori",
+  "license": "MIT",
   "main": "./src/index.js",
   "eslintConfig": {
     "extends": [
