@@ -54,7 +54,7 @@ async function start(fields) {
     const entriers = await Promise.all(parseEntries)
     const entries = [].concat.apply([], entriers)
 
-    const folderPath = "/Administratif/Probikeshop"
+    const folderPath = '/Administratif/Probikeshop'
     await mkdirp(folderPath)
     return saveBills(
       entries,
