@@ -2,7 +2,8 @@ const {
   requestFactory,
   saveBills,
   mkdirp,
-  BaseKonnector} = require('cozy-konnector-libs')
+  BaseKonnector
+} = require('cozy-konnector-libs')
 
 //const $ = require('cheerio')
 const request = requestFactory({
@@ -53,7 +54,7 @@ async function start(fields) {
     const entriers = await Promise.all(parseEntries)
     const entries = [].concat.apply([], entriers)
 
-    const folderPath = fields.folderPath
+    const folderPath = "/Administratif/Probikeshop"
     await mkdirp(folderPath)
     return saveBills(
       entries,
