@@ -1,13 +1,13 @@
 {
   "version": "1.0.0",
-  "name": "Connector template",
+  "name": "Probikeshop",
   "type": "konnector",
   "language": "node",
   "icon": "icon.png",
   "slug": "template",
-  "source": "git://github.com/konnectors/cozy-konnector-template.git",
-  "editor": "Cozy",
-  "vendor_link": "Link to the target website",
+  "source": "https://github.com/Crash--",
+  "editor": "Quentin Valmori",
+  "vendor_link": "https://github.com/Crash--",
   "categories": ["other"],
   "fields": {
     "login": {
@@ -28,9 +28,6 @@
   ],
   "screenshots": [],
   "permissions": {
-    "bank operations": {
-      "type": "io.cozy.bank.operations"
-    },
     "bills": {
       "type": "io.cozy.bills"
     },
@@ -43,18 +40,15 @@
     }
   },
   "developer": {
-    "name": "Cozy Cloud",
-    "url": "https://cozy.io"
+    "name": "Quentin Valmori",
+    "url": "https://github.com/Crash--"
   },
-  "langs": ["fr", "en"],
+  "langs": ["fr"],
   "locales": {
     "fr": {
-      "short_description": "Template de connecteur",
-      "long_description": "Ce template récupère une liste de livres sur un site de scraping",
+      "short_description": "Probikeshop",
+      "long_description": "Récupère les factures sur le site probikeshop.fr",
       "permissions": {
-        "bank operations": {
-          "description": "Utilisé pour relier les factures à des operations bancaires"
-        },
         "bills": {
           "description": "Utilisé pour sauver les données des factures"
         },
@@ -63,24 +57,6 @@
         },
         "accounts": {
           "description": "Utilisé pour obtenir les données du compte"
-        }
-      }
-    },
-    "en": {
-      "short_description": "Connector template",
-      "long_description": "This template fetches a list of books from a scraping website",
-      "permissions": {
-        "bank operations": {
-          "description": "Required to link bank operations to bills"
-        },
-        "bills": {
-          "description": "Required to save the bills data"
-        },
-        "files": {
-          "description": "Required to save the bills"
-        },
-        "accounts": {
-          "description": "Required to get the account's data"
         }
       }
     }
