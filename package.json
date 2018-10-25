@@ -4,11 +4,16 @@
   "description": "",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Crash--/cozy-konnector-probikeshop.git"
+    "url": "git+https://github.com/konnectors/probikeshop.git"
   },
-  "keywords": ["probikeshop", "cozy", "cozycloud", "konnector"],
-  "author": "Quentin Valmori",
-  "license": "MIT",
+  "keywords": [
+    "probikeshop",
+    "cozy",
+    "cozycloud",
+    "konnector"
+  ],
+  "author": "Cozy Cloud",
+  "license": "AGPL-3.0",
   "main": "./src/index.js",
   "eslintConfig": {
     "extends": [
@@ -29,7 +34,7 @@
     "build": "webpack",
     "precommit": "yarn lint",
     "lint": "eslint --fix .",
-    "deploy": "git-directory-deploy --directory build/ --branch ${DEPLOY_BRANCH:-build} --repo=${DEPLOY_REPOSITORY:-git@github.com:Crash--/cozy-konnector-probikeshop.git}",
+    "deploy": "git-directory-deploy --directory build/ --branch ${DEPLOY_BRANCH:-build} --repo=${DEPLOY_REPOSITORY:-git@github.com:konnectors/probikeshop.git}",
     "cozyPublish": "cozy-app-publish --token $REGISTRY_TOKEN --build-commit $(git rev-parse ${DEPLOY_BRANCH:-build})",
     "travisDeployKey": "./bin/generate_travis_deploy_key"
   },
@@ -44,7 +49,7 @@
     "eslint-config-cozy-app": "0.10.0",
     "git-directory-deploy": "1.5.1",
     "husky": "0.14.3",
-    "konitor": "0.9.0",
+    "konitor": "0.10.0",
     "svgo": "1.0.5",
     "webpack": "4.16.3",
     "webpack-cli": "3.1.0"
