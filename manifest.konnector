@@ -4,10 +4,10 @@
   "type": "konnector",
   "language": "node",
   "icon": "icon.png",
-  "slug": "template",
-  "source": "https://github.com/Crash--",
-  "editor": "Quentin Valmori",
-  "vendor_link": "https://github.com/Crash--",
+  "slug": "probikeshop",
+  "source": "git://github.com/konnectors/probikeshop.git",
+  "editor": "Cozy",
+  "vendor_link": "https://www.probikeshop.fr",
   "categories": ["shopping"],
   "fields": {
     "login": {
@@ -28,6 +28,9 @@
   ],
   "screenshots": [],
   "permissions": {
+    "bank operations": {
+      "type": "io.cozy.bank.operations"
+    },
     "bills": {
       "type": "io.cozy.bills"
     },
@@ -40,15 +43,18 @@
     }
   },
   "developer": {
-    "name": "Quentin Valmori",
-    "url": "https://github.com/Crash--"
+    "name": "Cozy Cloud",
+    "url": "https://cozy.io"
   },
-  "langs": ["fr"],
+  "langs": ["fr", "en"],
   "locales": {
     "fr": {
-      "short_description": "Probikeshop",
+      "short_description": "Récupère les factures sur le site probikeshop.fr",
       "long_description": "Récupère les factures sur le site probikeshop.fr",
       "permissions": {
+        "bank operations": {
+          "description": "Utilisé pour relier les factures à des operations bancaires"
+        },
         "bills": {
           "description": "Utilisé pour sauver les données des factures"
         },
@@ -59,7 +65,26 @@
           "description": "Utilisé pour obtenir les données du compte"
         }
       }
+    },
+    "en": {
+      "short_description": "Fetch your bills on  the probikeshop.fr website",
+      "long_description": "Fetch your bills on  the probikeshop.fr website",
+      "permissions": {
+        "bank operations": {
+          "description": "Required to link bank operations to bills"
+        },
+        "bills": {
+          "description": "Required to save the bills data"
+        },
+        "files": {
+          "description": "Required to save the bills"
+        },
+        "accounts": {
+          "description": "Required to get the account's data"
+        }
+      }
     }
   },
+  "banksTransactionRegExp": "\\bprobikeshop\\b",
   "manifest_version": "2"
 }
