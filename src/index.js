@@ -5,7 +5,6 @@ process.env.SENTRY_DSN =
 const {
   requestFactory,
   saveBills,
-  mkdirp,
   BaseKonnector
 } = require('cozy-konnector-libs')
 
@@ -58,17 +57,11 @@ async function start(fields) {
     const entriers = await Promise.all(parseEntries)
     const entries = [].concat.apply([], entriers)
 
-    const folderPath = '/Administratif/Probikeshop'
-    await mkdirp(folderPath)
-    return saveBills(
-      entries,
-      { folderPath },
-      {
-        identifiers: ['probikeshop'],
-        keys: ['date', 'amount', 'vendor'],
-        contentType: 'application/pdf'
-      }
-    )
+    return saveBills(entries, fields, {
+      identifiers: ['probikeshop'],
+      keys: ['date', 'amount', 'vendor'],
+      contentType: 'application/pdf'
+    })
   }
 }
 
