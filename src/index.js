@@ -8,7 +8,6 @@ const {
   BaseKonnector
 } = require('cozy-konnector-libs')
 
-//const $ = require('cheerio')
 const request = requestFactory({
   // the debug mode shows all the details about http request and responses. Very usefull for
   // debugging but very verbose. That is why it is commented out by default
@@ -96,17 +95,12 @@ function parseEntriesFor(fileUrl, row) {
   if (fileUrl !== undefined) {
     const common = {
       vendor: 'Probikeshop',
-      type: 'shopping',
-      isRefund: true,
-      beneficiary: 'beneficiary',
-      isThirdPartyPayer: true
+      currency: '€'
     }
 
     common.date = parseDate(row[1])
     common.filename = `${common.date}_${Math.random()}_probikeshop.pdf`
     common.fileurl = `${baseUrl}${fileUrl}`
-    common.isThirdPartyPayer = false
-
     common.amount = parseFloat(row[2].replace(',', '.').replace(' €', ''))
     return request(`${baseUrl}${fileUrl}`).then(() => {
       return common
