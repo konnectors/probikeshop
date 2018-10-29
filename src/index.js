@@ -58,7 +58,7 @@ async function start(fields) {
 
     return saveBills(entries, fields, {
       identifiers: ['probikeshop'],
-      keys: ['date', 'amount', 'vendor'],
+      keys: ['id'],
       contentType: 'application/pdf'
     })
   }
@@ -91,17 +91,34 @@ function parseDate(text) {
   return new Date(year, months.indexOf(month), day)
 }
 
+function formatDate(date) {
+  let year = date.getFullYear()
+  let month = date.getMonth() + 1
+  let day = date.getDate()
+  if (month < 10) {
+    month = '0' + month
+  }
+  if (day < 10) {
+    day = '0' + day
+  }
+  return `${year}-${month}-${day}`
+}
+
 function parseEntriesFor(fileUrl, row) {
   if (fileUrl !== undefined) {
     const common = {
-      vendor: 'Probikeshop',
+      vendor: 'probikeshop',
       currency: '€'
     }
-
+    common.id = row[0]
     common.date = parseDate(row[1])
-    common.filename = `${common.date}_${Math.random()}_probikeshop.pdf`
-    common.fileurl = `${baseUrl}${fileUrl}`
     common.amount = parseFloat(row[2].replace(',', '.').replace(' €', ''))
+    common.filename =
+      `${formatDate(common.date)}` +
+      `_${common.amount}€` +
+      `_${common.id}` +
+      `_probikeshop.pdf`
+    common.fileurl = `${baseUrl}${fileUrl}`
     return request(`${baseUrl}${fileUrl}`).then(() => {
       return common
     })
