@@ -49,8 +49,8 @@
   "langs": ["fr", "en"],
   "locales": {
     "fr": {
-      "short_description": "Récupère les factures sur le site probikeshop.fr",
-      "long_description": "Récupère les factures sur le site probikeshop.fr",
+      "short_description": "Récupère vos factures sur le site probikeshop.fr",
+      "long_description": "Récupère vos factures sur le site probikeshop.fr",
       "permissions": {
         "bank operations": {
           "description": "Utilisé pour relier les factures à des operations bancaires"
