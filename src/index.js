@@ -5,13 +5,15 @@ process.env.SENTRY_DSN =
 const {
   requestFactory,
   saveBills,
-  BaseKonnector
+  BaseKonnector,
+  log,
+  errors
 } = require('cozy-konnector-libs')
 
 const request = requestFactory({
   // the debug mode shows all the details about http request and responses. Very usefull for
   // debugging but very verbose. That is why it is commented out by default
-  //debug: true,
+  //  debug: true,
   // activates [cheerio](https://cheerio.js.org/) parsing on each page
   cheerio: true,
   // If cheerio is activated do not forget to deactivate json parsing (which is activated by
@@ -26,8 +28,10 @@ const baseUrl = 'https://www.probikeshop.fr'
 module.exports = new BaseKonnector(start)
 
 async function start(fields) {
+  let $
+  log('info', 'Start login')
   try {
-    await request(`${baseUrl}/mon-compte`, {
+    await request(`${baseUrl}/mon-compte/`, {
       xmlMode: true
     })
   } catch (error) {
@@ -40,9 +44,20 @@ async function start(fields) {
     inputs['signin[email]'] = fields.login
     inputs['signin[password]'] = fields.password
 
-    await post(`${baseUrl}${action}`, inputs)
+    try {
+      $ = await postLogin(`${baseUrl}${action}`, inputs)
+    } catch (err) {
+      if (err.statusCode === 401) {
+        log('Error', 'Detected 401 as login failed')
+        throw new Error(errors.LOGIN_FAILED)
+      } else {
+        throw new Error(errors.VENDOR_DOWN)
+      }
+    }
+    log('info', 'Login succeed')
 
-    const $ = await request(`${baseUrl}/mon-compte/commandes/`)
+    $ = await request(`${baseUrl}/mon-compte/commandes/`)
+    log('info', 'Parsing commandes page')
 
     const parseEntries = []
     $('.orders_table tr').each(function() {
@@ -124,6 +139,7 @@ function parseEntriesFor(fileUrl, row) {
     })
   }
 }
+
 function formContent($, selector) {
   const action = $(selector).attr('action')
   const inputs = {}
@@ -132,8 +148,10 @@ function formContent($, selector) {
   })
   return [action, inputs]
 }
-function post(uri, inputs) {
+
+function postLogin(uri, inputs) {
   return request({
+    followRedirect: false,
     uri: uri,
     method: 'POST',
     form: {
