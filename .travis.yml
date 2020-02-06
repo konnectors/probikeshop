@@ -3,7 +3,6 @@ node_js:
 - '12'
 env:
   global:
-  - DEPLOY_REPOSITORY="git@github.com:konnectors/probikeshop.git"
   # REGISTRY_TOKEN(editor=cozy, app=probikeshop)
   - secure: XFcB+a9OFC9M/bNJEUz6FQ006r13SqYEcCIKDlwaHp41BkRwbuicbR2joW8c5UqR1Pw4KdQuS3lHpjmOyklW3C1hDjbiLTF2yWsXt/yItpLuTE1BxHuXHr9vwVjLAG0GbeDDXsjqr5l9jhlkHUQ7JQQoB3QvIyU/YDVMxvNs+SHkt/MOsv3YQuKRuGc9f0fK7UPRq0dYCZOKgxd46MEp3Nwv6G3rfNjYcJ46uUgt2tTgbyMKSbPDLjZZrE+htDBVNPsnQrYzfl1q3l8yl9j0kKpVUfD/u0vM2QCPj73mvZhSY5wAAendn5RKxfosEH2fhA0Ilh2Mu6PGcq7HGIQ8qFDSwzrZyJxr+lpjiH2Y8uqzAaFBVL5A0gP/LEdM9ejPwkxBp+XWSQoliQsvjYcM7LQz491N3qWfCvuCPr5I6L8fxal8XPKKYJqaZjirQfFjomCwaoOw6ENoDPnfK+ESZcg0UmQ/KVKck8ovhE7oQmupaRNfT5Vu4WISYI3/UNJ285o9uim3/pS2gIw7D0CikO77mSJzu71BmFsMymaZUOVbug3x4uBT8DhiW2R4XEBYK0ILa/vmErfU9Kw4HF5YUVmePUrTMLx/h+PCm+Zo0G9MgWkxHuGBDfdwgzx+xCsSzHuCs0/UsUwW6rxDtaD2HGtP9pkxamFiErA4GM5PJ6o=
   # MATTERMOST_HOOK_URL
