@@ -1,7 +1,3 @@
-process.env.SENTRY_DSN =
-  process.env.SENTRY_DSN ||
-  'https://c360ae2d69a64b58b0f5fed3b8c5ce4e@sentry.cozycloud.cc/92'
-
 const {
   requestFactory,
   saveBills,
